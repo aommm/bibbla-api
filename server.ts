@@ -1,8 +1,10 @@
+/// <reference path="typings/main.d.ts" />
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var _ = require('lodash');
 
-app = express();
+var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,7 +23,7 @@ app.post('/login', function(req,res) {
 
 app.listen(3000, function() {
   console.log('app listening!');
-})
+});
 
 
 function callbacker(res) {

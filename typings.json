@@ -1,0 +1,5 @@
+{
+  "ambientDependencies": {
+    "require": "github:DefinitelyTyped/DefinitelyTyped/requirejs/require.d.ts#853544cb7068af64bdb10ef1ae0c54d3aa3a80f6"
+  }
+}
