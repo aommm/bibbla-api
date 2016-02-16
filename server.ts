@@ -1,33 +1,31 @@
 /// <reference path="typings/main.d.ts" />
+import {Request, Response} from "express";
 
 var express = require('express');
 var bodyParser = require('body-parser');
 var _ = require('lodash');
+var search = require('./api/search');
+var me = require('./api/me');
 
 var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-function login(username, password, cb) {
-  if (username == 'aom' && password == 'bobo') {
-    cb(null, {token: 'abc124'})
-  } else {
-    cb(401)
-  }
-}
+app.get('/search/:s', function(req:Request, res:Response){
+  search.search(req.params.s, callbacker(res));
+});
 
-app.post('/login', function(req,res) {
-  login(req.body.username, req.body.password, callbacker(res));
+app.post('/login', function(req:Request, res:Response) {
+  me.login(req.body.username, req.body.password, callbacker(res));
 });
 
 app.listen(3000, function() {
-  console.log('app listening!');
+  console.log('app listening! weoruihgjewoirgfgfdghh igo to 127.0.0.1:3000');
 });
 
-
-function callbacker(res) {
-  return function(err, result) {
+function callbacker(res:Response) {
+  return function(err:any, result:any) {
     if (err && err.code && err.value) {
       return res.status(err.code).send(err.value);
     } else if (err && err.code) {
