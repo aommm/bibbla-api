@@ -43,7 +43,7 @@ function search(searchString: string, cb:(a : any, b : any) => void) {
           result.push(book);
         }
       });
-      cb(result, undefined);
+      cb(undefined, result);
     }
   });
 }
