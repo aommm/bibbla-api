@@ -9,10 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^1.5.2",
     "body-parser": "^1.14.2",
     "cheerio": "^0.20.0",
+    "connect-redis": "^3.0.2",
     "express": "^4.13.4",
+    "express-session": "^1.13.0",
     "lodash": "^4.3.0",
+    "morgan": "^1.7.0",
     "request": "^2.69.0"
   }
 }
