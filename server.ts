@@ -12,6 +12,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 app.get('/search/:s', function(req:Request, res:Response){
   search.search(req.params.s, callbacker(res));
 });
