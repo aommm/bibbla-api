@@ -11,7 +11,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 function login(username, password, cb) {
   if (username == 'aom' && password == 'bobo') {
-    cb(null, {token: 'abc124'})
+    var user = {
+      username: "aom",
+      password: "bobo",
+      gotlib_surname: "bodo",
+      gotlib_code: "bodo",
+      gotlib_pin: "bodo"
+    };
+    cb(null, {token: 'abc124', user: user})
   } else {
     cb(401)
   }
