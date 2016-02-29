@@ -9,6 +9,7 @@ var _ = require('lodash');
 var search = require('./api/search');
 var me = require('./api/me');
 var {login} = require('./api/login');
+var reservations = require('./api/reservations');
 
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
@@ -43,7 +44,7 @@ app.post('/me/login', function(req:Request, res:Response) {
 // TODO change to POST
 app.get('/login', function(req:Request, res:Response) {
   let cber = callbacker(res);
-  login(req.body.gotlib_surname, req.body.gotlib_code, req.body.gotlib_pin, function(err, cookies) {
+  login(req.body.gotlib_surname, req.body.gotlib_code, req.body.gotlib_pin, req.session, function(err, cookies) {
     if (err) {
       return cber(res, null);
     }
@@ -51,6 +52,10 @@ app.get('/login', function(req:Request, res:Response) {
     // TODO save cookies to session, and return them
 
   });
+});
+
+app.get('/reservations', function (req: Request, res: Response)  {
+  reservations.get(req.session, callbacker(res));
 });
 
 app.get('/sessions', function (req: Request, res: Response) {
