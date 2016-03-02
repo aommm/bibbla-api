@@ -10,6 +10,7 @@ var search = require('./api/search');
 var me = require('./api/me');
 var {login} = require('./api/login');
 var reservations = require('./api/reservations');
+var books = require('./api/books')
 
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
@@ -38,6 +39,10 @@ app.get('/search/:s', function(req:Request, res:Response){
 
 app.post('/me/login', function(req:Request, res:Response) {
   me.login(req.body.username, req.body.password, callbacker(res));
+});
+
+app.get('/books/:id', function(req:Request, res:Response){
+  books.getBook(req.params.id, callbacker(res));
 });
 
 // Log in to gotlib

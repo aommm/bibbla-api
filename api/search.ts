@@ -18,11 +18,13 @@ function search(searchString: string, cb:(a : any, b : any) => void) {
       var $ = cheerio.load(body);
       var potBooks:Cheerio = $('.sokresultat');
       var result:any[] = [];
+      var tempId:string;
       potBooks.each(function(index:number, elem:CheerioElement){
         var book:any = {}; //TODO make book type
         var strong:Cheerio = $(elem).find('strong');
         // make sure we only get the one we are interested in
         if($(elem).find('font').length != 1) {
+          tempId = $(elem).find("input").val();
           return true;
         }
         var author:string = strong.first().html();
@@ -39,11 +41,15 @@ function search(searchString: string, cb:(a : any, b : any) => void) {
         if(title) {
           book.title = title.replace("\n", "");
         }
+        if(tempId) {
+          book.gotlibId = tempId;
+        }
         if(book.author || book.section || book.title) {
           result.push(book);
         }
       });
       cb(undefined, result);
+      //cb(undefined, $.html());
     }
   });
 }
