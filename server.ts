@@ -1,31 +1,74 @@
 /// <reference path="typings/main.d.ts" />
 import {Request, Response} from "express";
+import morgan = require("morgan");
 
 var express = require('express');
 var bodyParser = require('body-parser');
 var _ = require('lodash');
+
 var search = require('./api/search');
 var me = require('./api/me');
+var {login} = require('./api/login');
+var reservations = require('./api/reservations');
+
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+
+var maxAge = 20*60*1000; // 20 mins
 
 var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var sessionStore = new RedisStore({host: 'localhost', ttl: maxAge/1000});
+app.use(session({
+  store: sessionStore,
+  secret: 'keyboard cat',
+  cookie: {
+    maxAge: maxAge
+  }
+}));
+
+app.use(morgan('combined'));
 
 app.get('/search/:s', function(req:Request, res:Response){
   search.search(req.params.s, callbacker(res));
 });
 
-app.post('/login', function(req:Request, res:Response) {
+app.post('/me/login', function(req:Request, res:Response) {
   me.login(req.body.username, req.body.password, callbacker(res));
+});
+
+// Log in to gotlib
+// TODO change to POST
+app.get('/login', function(req:Request, res:Response) {
+  let cber = callbacker(res);
+  login(req.body.gotlib_surname, req.body.gotlib_code, req.body.gotlib_pin, req.session, function(err, cookies) {
+    if (err) {
+      return cber(res, null);
+    }
+    res.send(cookies);
+    // TODO save cookies to session, and return them
+
+  });
+});
+
+app.get('/reservations', function (req: Request, res: Response)  {
+  reservations.get(req.session, callbacker(res));
+});
+
+app.get('/sessions', function (req: Request, res: Response) {
+  console.log(sessionStore);
+  //req.session.
+  res.send()
 });
 
 app.listen(3000, function() {
   console.log('app listening! weoruihgjewoirgfgfdghh igo to 127.0.0.1:3000');
 });
 
-function callbacker(res:Response) {
+function callbacker(res:Response) : (err:any,result:any) => void {
   return function(err:any, result:any) {
     if (err && err.code && err.value) {
       return res.status(err.code).send(err.value);
