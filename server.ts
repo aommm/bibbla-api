@@ -41,22 +41,30 @@ app.post('/me/login', function(req:Request, res:Response) {
   me.login(req.body.username, req.body.password, callbacker(res));
 });
 
+
 app.get('/books/:id', function(req:Request, res:Response){
   books.getBook(req.params.id, callbacker(res));
 });
+// Temporary login form
+app.get('/login', function (req:Request, res:Response) {
+  var html = '<html><body><form method="POST" action="/login">' +
+      '<input type="text" name="name" placeholder="Name"/><br/>' +
+      '<input type="text" name="code" placeholder="Code"/><br/>' +
+      '<input type="password" name="pin" placeholder="PIN"/><br/>' +
+      '<input type="submit" value="log in"/>' +
+      '</form><a href="/logout">log out</a></body></html>';
+  res.send(html);
+});
 
 // Log in to gotlib
-// TODO change to POST
-app.get('/login', function(req:Request, res:Response) {
-  let cber = callbacker(res);
-  login(req.body.gotlib_surname, req.body.gotlib_code, req.body.gotlib_pin, req.session, function(err, cookies) {
-    if (err) {
-      return cber(res, null);
-    }
-    res.send(cookies);
-    // TODO save cookies to session, and return them
+app.post('/login', function(req:Request, res:Response) {
+  login(req.body.name, req.body.code, req.body.pin, req.session, callbacker(res));
+});
 
-  });
+// TODO change to post
+app.get('/logout', function(req:Request, res:Response) {
+  req.session.destroy();
+  res.send("Session destroyed >:(");
 });
 
 app.get('/reservations', function (req: Request, res: Response)  {
