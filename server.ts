@@ -15,7 +15,8 @@ var books = require('./api/books')
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 
-var maxAge = 20*60*1000; // 20 mins
+//var maxAge = 20*60*1000; // 20 mins
+var maxAge = 20000000;
 
 var app = express();
 

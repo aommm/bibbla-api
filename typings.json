@@ -4,8 +4,10 @@
     "cheerio": "github:DefinitelyTyped/DefinitelyTyped/cheerio/cheerio.d.ts#365b6ffc7c8ce685ec11fb908c4918d66c4047b5",
     "express": "github:DefinitelyTyped/DefinitelyTyped/express/express.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4",
     "express-session": "github:DefinitelyTyped/DefinitelyTyped/express-session/express-session.d.ts#da2bb07e037a61e6ead149ae89063b00892f6929",
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash-3.10.d.ts#3d572e1ee3e6492983ef01f8b7adf6150d345b11",
     "morgan": "github:DefinitelyTyped/DefinitelyTyped/morgan/morgan.d.ts#4566a913a3667dc627851d0f7f38ffcd0e7cf6ea",
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#aee0039a2d6686ec78352125010ebb38a7a7d743",
+    "redis": "github:DefinitelyTyped/DefinitelyTyped/redis/redis.d.ts#99564d906102e30a5a472cb3527f93bf82982673",
     "request": "github:DefinitelyTyped/DefinitelyTyped/request/request.d.ts#90c7b5653c973cbc8c568ba33c8a04fb478525ee"
   }
 }

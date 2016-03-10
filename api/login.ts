@@ -1,8 +1,10 @@
 /// <reference path="../typings/main.d.ts" />
 
+import {newBibRequest} from "../utils";
+
 import request = require("request");
 import async = require('async');
-import _ = require('lodash');
+import _ = require("lodash");
 import {Cookie} from "request";
 import Session = Express.Session;
 var cheerio = require('cheerio');
@@ -50,8 +52,23 @@ export function login(name : String, code : String, pin : String, session : Sess
             cb(null, cookies);
         }
     ], cb);
+}
 
-
-
-
+/**
+ * Send a simple GET request to keep connection alive
+ * @param cookies - cookies to use for request (= cookies to keep alive)
+ * @param cb
+ */
+export function touch(cookies : Cookie[], cb : (err : any) => void) {
+    let url = "https://www.gotlib.goteborg.se/iii/cas/login?service=https%3A%2F%2Fencore.gotlib.goteborg.se%3A443%2Fiii%2Fencore%2Fj_acegi_cas_security_check&lang=swe";
+    let bibRequest = newBibRequest(cookies, url);
+    bibRequest({
+        url: url,
+        method: 'GET'
+    }, function(err, response, body) {
+        if (response.statusCode !== 200) {
+            return cb(response.statusCode);
+        }
+        cb(null);
+    })
 }

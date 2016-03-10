@@ -3,20 +3,20 @@ import Session = Express.Session;
 import {CookieJar} from "request";
 import request = require("request");
 import _ = require("lodash");
+import {Cookie} from "request";
 
-export function newCookieJar(session : Session, url : String) : CookieJar  {
+export function newCookieJar(cookies : Cookie[], url : String) : CookieJar  {
   let jar = request.jar();
-  _.each(session.cookies, function (cookie : String) {
-    console.log('yo',cookie,url);
+  _.each(cookies, function (cookie : String) {
     jar.setCookie(cookie, url)
   });
   return jar;
 }
 
-export function newBibRequest(session, url) {
+export function newBibRequest(cookies : Cookie[], url) {
   let opts = {
     json: true,
-    jar: newCookieJar(session, url)
-  }
+    jar: newCookieJar(cookies, url)
+  };
   return request.defaults(opts);
 }

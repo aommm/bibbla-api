@@ -51,7 +51,7 @@ class ReservationParser {
 
 function get(session, cb) {
   let url = "https://www.gotlib.goteborg.se/patroninfo~S6*swe/1207852/holds";
-  let bibRequest = newBibRequest(session, url);
+  let bibRequest = newBibRequest(session.cookies, url);
 
   async.waterfall([
     // Get reservations
