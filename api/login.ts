@@ -60,7 +60,8 @@ export function login(name : String, code : String, pin : String, session : Sess
  * @param cb
  */
 export function touch(cookies : Cookie[], cb : (err : any) => void) {
-    let url = "https://www.gotlib.goteborg.se/iii/cas/login?service=https%3A%2F%2Fencore.gotlib.goteborg.se%3A443%2Fiii%2Fencore%2Fj_acegi_cas_security_check&lang=swe";
+    //let url = "https://www.gotlib.goteborg.se/iii/cas/login?service=https%3A%2F%2Fencore.gotlib.goteborg.se%3A443%2Fiii%2Fencore%2Fj_acegi_cas_security_check&lang=swe";
+    let url = "https://www.gotlib.goteborg.se/patroninfo~S6*swe/1207852/top";
     let bibRequest = newBibRequest(cookies, url);
     bibRequest({
         url: url,
@@ -69,6 +70,12 @@ export function touch(cookies : Cookie[], cb : (err : any) => void) {
         if (response.statusCode !== 200) {
             return cb(response.statusCode);
         }
+        console.log('cookies beforeÖ',cookies);
+        console.log('cookies after',response.headers['set-cookie']);
+        console.log(response.statusCode);
+        console.log(body);
+
+        // TODO Do they give new cookies? check here!
         cb(null);
     })
 }
