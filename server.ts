@@ -16,7 +16,7 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 
 //var maxAge = 20*60*1000; // 20 mins
-var maxAge = 20000000;
+var maxAge = 2000000000; // ~23 days
 
 var app = express();
 
