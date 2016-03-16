@@ -53,7 +53,8 @@ export function login(name : String, code : String, pin : String, session : Sess
             // Save cookies to session
             session.cookies = _.map(cookies, (cookie) => {return cookie.toString()});
             // Also return cookies (?)
-            cb(null, cookies);
+            //cb(null, cookies);
+            cb(null, {});
         }
     ], cb);
 }
