@@ -3,6 +3,7 @@ import {newBibRequest} from "../utils";
 import async = require("async");
 import cheerio = require("cheerio");
 import _ = require("lodash");
+import {aborter} from "../utils";
 
 class Reservation {
   name: string;
@@ -59,6 +60,7 @@ function get(session, cb) {
       let opts = {url: url, method: "GET"};
       bibRequest(opts, cb);
     },
+    aborter(cb),
     // Parse reservations
     function (response, body, cb) {
       let parser = new ReservationParser(body);

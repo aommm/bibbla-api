@@ -20,3 +20,14 @@ export function newBibRequest(cookies : Cookie[], url) {
   };
   return request.defaults(opts);
 }
+
+export function aborter(finalCb) {
+  return function(response, body, cb) {
+    code = response.statusCode+"";
+    if (['4', '5'].indexOf(code[0]) !== -1) {
+      finalCb(response.statusCode, body);
+    } else {
+      cb(null, response, body);
+    }
+  };
+}
