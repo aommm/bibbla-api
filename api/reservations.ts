@@ -68,7 +68,6 @@ function get(session, cb) {
       cb(null, reservations);
     }
   ], cb);
-
 }
 
 export {

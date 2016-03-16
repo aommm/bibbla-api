@@ -46,6 +46,10 @@ export function login(name : String, code : String, pin : String, session : Sess
         },
         function(response, body, cb) {
             let cookies : Cookie[] = jar.getCookies('https://gotlib.goteborg.se');
+            // Request failed - abort
+            if (_.isEmpty(cookies)) {
+                return cb(401, null);
+            }
             // Save cookies to session
             session.cookies = _.map(cookies, (cookie) => {return cookie.toString()});
             // Also return cookies (?)
